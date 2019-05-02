@@ -23,11 +23,7 @@ public class AdjacencyListGraph implements Graph {
     public Set<Edge> edges()
     {
         Set<Edge> res = new HashSet<>();
-        adjacencyList.forEach( (k, v) -> {
-            v.forEach( e -> {
-                res.add(new Edge(k, e));
-            });
-        });
+        adjacencyList.forEach((k, v) -> v.forEach(e -> res.add(new Edge(k, e))));
         return res;
     }
 
