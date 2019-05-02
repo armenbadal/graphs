@@ -90,6 +90,7 @@ public class AdjacencyMatrixGraph implements Graph {
         if( -1 != indexOf(v) )
             return false;
 
+        vertexNames[vertexCount++] = v;
         return true;
     }
     
@@ -147,11 +148,22 @@ public class AdjacencyMatrixGraph implements Graph {
     {
         StringBuilder sr = new StringBuilder();
         sr.append("Vertices: ");
-        for( int i = 0; i < vertexCount; ++i )
+        for( int i = 0; i < vertexCount; ++i ) {
             sr.append(vertexNames[i]);
+            sr.append(" ");
+        }
+        sr.append("\n");
+
+        sr.append("Edges: ");
+        edges().forEach( e -> sr.append(e).append(" ") );
         sr.append("\n");
 
         // TEST
+        for( int i = 0; i < vertexCount; ++i ) {
+            for( int j = 0; j < vertexCount; ++j )
+                sr.append(adjacencyMatrix[i][j] ? "* " : ". ");
+            sr.append("\n");
+        }
 
         return sr.toString();
     }
