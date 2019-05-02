@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -15,13 +16,19 @@ public class AdjacencyListGraph implements Graph {
     @Override
     public Set<String> vertices()
     {
-        return null;
+        return adjacencyList.keySet();
     }
 
     @Override
     public Set<Edge> edges()
     {
-        return null;
+        Set<Edge> res = new HashSet<>();
+        adjacencyList.forEach( (k, v) -> {
+            v.forEach( e -> {
+                res.add(new Edge(k, e));
+            });
+        });
+        return res;
     }
 
     @Override
@@ -37,7 +44,11 @@ public class AdjacencyListGraph implements Graph {
     @Override
     public boolean removeVertex( String v )
     {
-        return false;
+        if( null == adjacencyList.remove(v) )
+            return false;
+
+        adjacencyList.values().forEach(al -> al.remove(v));
+        return true;
     }
 
     @Override
@@ -57,6 +68,22 @@ public class AdjacencyListGraph implements Graph {
     @Override
     public boolean removeEdge( String u, String v )
     {
-        return false;
+        if( !adjacencyList.containsKey(u) || !adjacencyList.containsKey(v) )
+            return false;
+
+        if( !adjacencyList.get(u).contains(v) && !adjacencyList.get(v).contains(u) )
+            return false;
+
+        adjacencyList.get(u).remove(v);
+        adjacencyList.get(v).remove(u);
+        return true;
+    }
+
+    @Override
+    public String toString()
+    {
+        String vs = "Vertices: " + String.join(", ", vertices());
+        String es = "Edges: ";
+        return vs + "\n" + es;
     }
 }
