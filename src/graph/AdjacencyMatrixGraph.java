@@ -113,18 +113,46 @@ public class AdjacencyMatrixGraph implements Graph {
     @Override
     public boolean addEdge( String u, String v )
     {
+        int iu = indexOf(u);
+        int iv = indexOf(v);
+        if( iu == -1 || iv == -1 )
+            return false;
+
+        if( adjacencyMatrix[iv][iu] && adjacencyMatrix[iu][iv] )
+            return false;
+
+        adjacencyMatrix[iv][iu] = true;
+        adjacencyMatrix[iu][iv] = true;
         return true;
     }
     
     @Override
     public boolean removeEdge( String u, String v )
     {
+        int iu = indexOf(u);
+        int iv = indexOf(v);
+        if( iu == -1 || iv == -1 )
+            return false;
+
+        if( !adjacencyMatrix[iv][iu] || !adjacencyMatrix[iu][iv] )
+            return false;
+
+        adjacencyMatrix[iv][iu] = false;
+        adjacencyMatrix[iu][iv] = false;
         return true;
     }
 
     @Override
     public String toString()
     {
-        return "Adjacency Matrix Graph";
+        StringBuilder sr = new StringBuilder();
+        sr.append("Vertices: ");
+        for( int i = 0; vertexCount; ++i )
+            sr.append(vertexNames[i]);
+        sr.append("\n");
+
+        // TEST
+
+        return sr.toString();
     }
 }
