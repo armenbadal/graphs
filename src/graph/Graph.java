@@ -6,6 +6,8 @@ public interface Graph {
     Set<String> vertices();
     Set<Edge> edges();
 
+    int degree( String v );
+
     boolean addVertex( String v );
     boolean removeVertex( String v );
 

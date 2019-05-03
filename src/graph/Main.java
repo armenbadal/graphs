@@ -13,5 +13,8 @@ public class Main {
         g0.addEdge("c", "b");
 
         System.out.println(g0);
+
+        g0.removeVertex("b");
+        System.out.println(g0);
     }
 }

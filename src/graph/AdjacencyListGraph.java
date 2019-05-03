@@ -76,6 +76,12 @@ public class AdjacencyListGraph implements Graph {
     }
 
     @Override
+    public int degree( String v )
+    {
+        return 0;
+    }
+
+    @Override
     public String toString()
     {
         String vs = "Vertices: " + String.join(", ", vertices());

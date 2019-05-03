@@ -2,6 +2,7 @@ package graph;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**/
 public class AdjacencyMatrixGraph implements Graph {
@@ -26,23 +27,6 @@ public class AdjacencyMatrixGraph implements Graph {
 
         return -1;
     }
-
-    // //
-    // private boolean hasVertex( String v )
-    // {
-    //     return -1 != indexOf(v);
-    // }
-
-    // //
-    // private boolean hasEdge( String u, String v )
-    // {
-    //     int iu = indexOf(u);
-    //     int iv = indexOf(v);
-    //     if( -1 == iu || -1 == iv )
-    //         return false;
-
-    //     return adjacencyMatrix[iu][iv] && adjacencyMatrix[iv][iu];
-    // }
 
     //
     private void resize( int ns )
@@ -101,6 +85,7 @@ public class AdjacencyMatrixGraph implements Graph {
         if( iv == -1 )
             return false;
 
+        // TODO: սխալ կա, ուղղել
         for( int j = iv; j < vertexCount; ++j ) {
             vertexNames[j] = vertexNames[j+1];
             adjacencyMatrix[iv][j] = adjacencyMatrix[iv][j+1];
@@ -144,27 +129,28 @@ public class AdjacencyMatrixGraph implements Graph {
     }
 
     @Override
+    public int degree( String v )
+    {
+        return 0;
+    }
+
+    @Override
     public String toString()
     {
-        StringBuilder sr = new StringBuilder();
-        sr.append("Vertices: ");
-        for( int i = 0; i < vertexCount; ++i ) {
-            sr.append(vertexNames[i]);
-            sr.append(" ");
-        }
-        sr.append("\n");
-
-        sr.append("Edges: ");
-        edges().forEach( e -> sr.append(e).append(" ") );
-        sr.append("\n");
+        String vs = String.join(", ", vertices());
+        String es = String.join(", ",
+            edges().stream().map(e -> e.toString())
+            .collect(Collectors.toSet()));
 
         // TEST
+        StringBuilder sr = new StringBuilder();
         for( int i = 0; i < vertexCount; ++i ) {
             for( int j = 0; j < vertexCount; ++j )
                 sr.append(adjacencyMatrix[i][j] ? "* " : ". ");
             sr.append("\n");
         }
+        System.out.println(sr.toString());
 
-        return sr.toString();
+        return String.format("Vertices: %s\nEdges: %s", vs, es);
     }
 }
